@@ -3,7 +3,7 @@
    <description name="Project Matcher">
       [Any description from project site]
    </description>
-   <feature url="features/org.javaadam.quickmatcher.jdt.feature_1.0.0.jar" id="org.javaadam.quickmatcher.jdt.feature" version="1.0.0">
+   <feature url="features/org.javaadam.quickmatcher.jdt.feature_0.0.9.201203101047.jar" id="org.javaadam.quickmatcher.jdt.feature" version="0.0.9.201203101047">
       <category name="Project Matcher"/>
    </feature>
    <category-def name="Project Matcher" label="Project Matcher">

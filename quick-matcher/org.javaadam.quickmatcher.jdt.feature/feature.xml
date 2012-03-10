@@ -2,7 +2,7 @@
 <feature
       id="org.javaadam.quickmatcher.jdt.feature"
       label="Project Matcher (JDT) Feature"
-      version="1.0.0"
+      version="0.0.9.qualifier"
       provider-name="Adam Wehner">
 
    <description url="http://code.google.com/p/quick-matcher/">
@@ -124,6 +124,13 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <plugin
          id="org.javaadam.quickmatcher.jdt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.javaadam.quickmatcher.common"
          download-size="0"
          install-size="0"
          version="0.0.0"
