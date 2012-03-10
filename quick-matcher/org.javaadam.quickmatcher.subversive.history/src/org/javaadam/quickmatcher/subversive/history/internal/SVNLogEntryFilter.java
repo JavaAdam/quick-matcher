@@ -24,12 +24,14 @@ public class SVNLogEntryFilter implements ILogEntryFilter {
 
 	@Override
 	public boolean accept(final SVNLogEntry logEntry) {
-		final String author = logEntry.author;
-		final String message = logEntry.message;
-		final String revision = String.valueOf(logEntry.revision);
+		final String author = logEntry.author.toLowerCase();
+		final String message = logEntry.message.toLowerCase();
+		final String revision = String.valueOf(logEntry.revision).toLowerCase();
 
-		if (author.contains(textToAccept) || message.contains(textToAccept)
-				|| revision.contains(textToAccept)) {
+		final String acceptedText = textToAccept.toLowerCase();
+
+		if (author.contains(acceptedText) || message.contains(acceptedText)
+				|| revision.contains(acceptedText)) {
 			return true;
 		} else {
 			return false;
