@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: org.javaadam.quickmatcher.jdt.tests
+Bundle-Version: 0.0.1.qualifier
+Bundle-Vendor: Adam Lucarz
+Fragment-Host: org.javaadam.quickmatcher.jdt;bundle-version="0.0.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit
