@@ -4,7 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.javaadam.jdt.quickmatcher.internal.messages";
+	private static final String BUNDLE_NAME = "org.javaadam.quickmatcher.jdt.internal.messages";
 
 	static {
 		// load message values from bundle file

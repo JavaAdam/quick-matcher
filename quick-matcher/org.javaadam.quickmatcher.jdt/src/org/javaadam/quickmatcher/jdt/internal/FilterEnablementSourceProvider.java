@@ -27,7 +27,7 @@ public class FilterEnablementSourceProvider extends AbstractSourceProvider
 	private static final String TAG_DUMMY_TO_TEST_EXISTENCE = "CustomFiltersActionGroup."
 			+ JavaUI.ID_PACKAGES + ".TAG_DUMMY_TO_TEST_EXISTENCE";
 
-	private static final String FILTER_ID = "org.eclipse.jdt.java.ui.filters.quickmatcherFilter";
+	private static final String FILTER_ID = "org.eclipse.jdt.java.ui.filters.ProjectMatcherFilter";
 	private boolean cachedEnablement;
 
 	@Override

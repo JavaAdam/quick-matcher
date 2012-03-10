@@ -7,7 +7,7 @@
             class="org.javaadam.quickmatcher.jdt.internal.ProjectMatcherFilter"
             description="%filter.description"
             enabled="true"
-            id="org.eclipse.jdt.java.ui.filters.quickmatcherFilter"
+            id="org.eclipse.jdt.java.ui.filters.ProjectMatcherFilter"
             name="%filter.name"
             targetId="org.eclipse.jdt.ui.PackageExplorer">
       </filter>
@@ -22,7 +22,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                     variable="org.eclipse.jdt.java.ui.filters.quickmatcherFilter">
+                     variable="org.eclipse.jdt.java.ui.filters.ProjectMatcherFilter">
                   <equals
                         value="true">
                   </equals>
@@ -36,7 +36,7 @@
       <sourceProvider
             provider="org.javaadam.quickmatcher.jdt.internal.FilterEnablementSourceProvider">
          <variable
-               name="org.eclipse.jdt.java.ui.filters.quickmatcherFilter"
+               name="org.eclipse.jdt.java.ui.filters.ProjectMatcherFilter"
                priorityLevel="workbench">
          </variable>
       </sourceProvider>
