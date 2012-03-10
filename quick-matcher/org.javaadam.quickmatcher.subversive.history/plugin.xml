@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.team.ui.GenericHistoryView">
+         <control
+               class="org.javaadam.quickmatcher.subversive.history.internal.contributions.ToolbarControlContribution"
+               id="org.javaadam.quickmatcher.subversive.history.contributions.ToolbarControlContribution">
+         </control>
+      </menuContribution>
+   </extension>
+
+</plugin>
