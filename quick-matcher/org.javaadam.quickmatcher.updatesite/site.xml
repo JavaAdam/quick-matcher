@@ -3,13 +3,21 @@
    <description name="Project Matcher">
       [Any description from project site]
    </description>
-   <feature url="features/org.javaadam.quickmatcher.jdt.feature_0.0.9.201203101047.jar" id="org.javaadam.quickmatcher.jdt.feature" version="0.0.9.201203101047">
+   <feature url="features/org.javaadam.quickmatcher.jdt.feature_0.0.9.201203101710.jar" id="org.javaadam.quickmatcher.jdt.feature" version="0.0.9.201203101710">
       <category name="Project Matcher"/>
+   </feature>
+   <feature url="features/org.javaadam.quickmatcher.subversive.feature_0.0.9.201203101710.jar" id="org.javaadam.quickmatcher.subversive.feature" version="0.0.9.201203101710">
+      <category name="Subversive History Matcher"/>
    </feature>
    <category-def name="Project Matcher" label="Project Matcher">
       <description>
          Project Matcher (JDT) provides the possibility to hide all not
 important projects in the Package Explorer in a quick way.
+      </description>
+   </category-def>
+   <category-def name="Subversive History Matcher" label="Subversive History Matcher">
+      <description>
+         Subversive History Matcher provides the functionality to hide all unimportant log entries in the History.
       </description>
    </category-def>
 </site>
