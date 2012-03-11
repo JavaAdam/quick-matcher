@@ -32,7 +32,7 @@ public class ToolbarControlContribution extends
 	}
 
 	@Override
-	protected void filterChanged(final String newFilterText) {
+	protected void matcherTextChanged(final String newFilterText) {
 		final IViewPart foundView = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
 				.findView("org.eclipse.team.ui.GenericHistoryView");
@@ -64,7 +64,7 @@ public class ToolbarControlContribution extends
 
 						@Override
 						public void widgetDisposed(final DisposeEvent e) {
-							clearFilterText();
+							clearMatcherText();
 						}
 					});
 					currentPage.addFilter(svnLogEntryFilter);

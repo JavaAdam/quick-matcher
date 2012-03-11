@@ -1,4 +1,4 @@
-package org.javaadam.quickmatcher.common.widgets;
+package org.javaadam.quickmatcher.common.internal.widgets;
 
 public interface ITextContentWidget {
 

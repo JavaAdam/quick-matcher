@@ -15,7 +15,7 @@ public abstract class AbstractQuickMatcherControlContribution extends WorkbenchW
 	private static final boolean isMac = System.getProperty("os.name") //$NON-NLS-1$
 			.equalsIgnoreCase("Mac OS X"); //$NON-NLS-1$
 
-	private TextWithCancelButton filterControl = null;
+	private TextWithCancelButton matcherControl = null;
 
 	public AbstractQuickMatcherControlContribution() {
 		super();
@@ -29,11 +29,11 @@ public abstract class AbstractQuickMatcherControlContribution extends WorkbenchW
 		return SWT.DEFAULT;
 	}
 
-	protected String getInitialFilterText() {
+	protected String getInitialMatcherText() {
 		return null;
 	}
 
-	protected abstract void filterChanged(String newFilterText);
+	protected abstract void matcherTextChanged(String newText);
 
 	@Override
 	protected final Control createControl(Composite parent) {
@@ -43,18 +43,18 @@ public abstract class AbstractQuickMatcherControlContribution extends WorkbenchW
 			@Override
 			public void modifyText(ModifyEvent e) {
 				String newFilterText = ((TextWithCancelButton) e.widget).getText();
-				filterChanged(newFilterText);
+				matcherTextChanged(newFilterText);
 			}
 		};
-		filterControl = new TextWithCancelButton(composite);
-		filterControl.setLayoutData(new GridData(getWidth(), SWT.DEFAULT));
+		matcherControl = new TextWithCancelButton(composite);
+		matcherControl.setLayoutData(new GridData(getWidth(), SWT.DEFAULT));
 		initText();
-		filterControl.addModifyListener(modifyListener);
+		matcherControl.addModifyListener(modifyListener);
 		return composite;
 	}
 
-	public final void clearFilterText() {
-		filterControl.clearText();
+	public final void clearMatcherText() {
+		matcherControl.clearText();
 	}
 
 	private Composite createComposite(Composite parent) {
@@ -71,12 +71,12 @@ public abstract class AbstractQuickMatcherControlContribution extends WorkbenchW
 	}
 
 	private void initText() {
-		String initialFilterText = getInitialFilterText();
+		String initialFilterText = getInitialMatcherText();
 		if (initialFilterText != null && initialFilterText.trim().length() > 0) {
-			filterControl.setText(initialFilterText);
+			matcherControl.setText(initialFilterText);
 		}
 		else {
-			filterControl.clearText();
+			matcherControl.clearText();
 		}
 	}
 }

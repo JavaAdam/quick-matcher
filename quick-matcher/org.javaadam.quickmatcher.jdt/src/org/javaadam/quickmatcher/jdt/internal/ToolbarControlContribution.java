@@ -26,7 +26,7 @@ public class ToolbarControlContribution extends AbstractQuickMatcherControlContr
 	}
 
 	@Override
-	protected String getInitialFilterText() {
+	protected String getInitialMatcherText() {
 		ProjectMatcherModel model = Activator.getModel();
 		String matchString = model.getMatchString();
 		if (matchString != null) {
@@ -37,7 +37,7 @@ public class ToolbarControlContribution extends AbstractQuickMatcherControlContr
 	}
 
 	@Override
-	protected void filterChanged(String newFilterText) {
+	protected void matcherTextChanged(String newFilterText) {
 		ProjectMatcherModel model = Activator.getModel();
 		model.setMatchString(textUtils.transformText(newFilterText));
 		updatePackageExplorer();

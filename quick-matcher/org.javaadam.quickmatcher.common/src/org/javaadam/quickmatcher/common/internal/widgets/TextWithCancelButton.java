@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.TypedListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.swt.IFocusService;
-import org.javaadam.quickmatcher.common.widgets.ITextContentWidget;
 
 public class TextWithCancelButton extends Composite implements
 		ITextContentWidget, MouseListener, MouseTrackListener,
