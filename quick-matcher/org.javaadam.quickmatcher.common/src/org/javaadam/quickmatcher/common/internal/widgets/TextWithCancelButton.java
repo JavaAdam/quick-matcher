@@ -1,6 +1,8 @@
 package org.javaadam.quickmatcher.common.internal.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -10,6 +12,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -25,7 +29,7 @@ import org.eclipse.ui.swt.IFocusService;
 
 public class TextWithCancelButton extends Composite implements
 		ITextContentWidget, MouseListener, MouseTrackListener,
-		MouseMoveListener {
+		MouseMoveListener, DisposeListener {
 
 	private static final String textEmpty = Messages.TextWithCancelButton_empty_text;
 
@@ -34,8 +38,8 @@ public class TextWithCancelButton extends Composite implements
 	private static final int BUTTON_HEIGHT = 16;
 	private static final int BUTTON_WIDTH = BUTTON_HEIGHT;
 
-	private static final boolean isMac = System.getProperty("os.name") //$NON-NLS-1$
-			.equalsIgnoreCase("Mac OS X"); //$NON-NLS-1$
+	private static final boolean isMac = System.getProperty("os.name")
+			.equalsIgnoreCase("Mac OS X");
 
 	private Text text = null;
 
@@ -44,14 +48,14 @@ public class TextWithCancelButton extends Composite implements
 	private boolean isMouseMoveListenerRegistered = false;
 	private boolean isMouseInButton = false;
 
-	private String lastText = ""; //$NON-NLS-1$
+	private String lastText = "";
 
 	private Image activeImage = null;
 	private Image inactiveImage = null;
 
-	public TextWithCancelButton(Composite parent) {
+	public TextWithCancelButton(final Composite parent, final int fontSize) {
 		super(parent, isMac ? SWT.NONE : SWT.BORDER);
-		createControls();
+		createControls(fontSize);
 	}
 
 	@Override
@@ -61,7 +65,7 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	@Override
-	public void setText(String textContent) {
+	public void setText(final String textContent) {
 		checkWidget();
 		if (textContent != null && textContent.length() != 0
 				&& !textContent.equals(textEmpty)) {
@@ -71,12 +75,12 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	@Override
-	public void setLayoutData(Object layoutData) {
+	public void setLayoutData(final Object layoutData) {
 		if (layoutData instanceof GridData) {
-			GridData gridData = (GridData) layoutData;
+			final GridData gridData = (GridData) layoutData;
 			if (gridData.widthHint != SWT.DEFAULT) {
-				int width = gridData.widthHint;
-				int borderWidth = 2;
+				final int width = gridData.widthHint;
+				final int borderWidth = 2;
 				gridData.widthHint = isMac ? width : width - borderWidth;
 			}
 		}
@@ -84,9 +88,9 @@ public class TextWithCancelButton extends Composite implements
 
 	}
 
-	private void createControls() {
+	private void createControls(final int fontSize) {
 		initImages();
-		GridLayout gridLayout = new GridLayout(isMac ? 1 : 2, false);
+		final GridLayout gridLayout = new GridLayout(isMac ? 1 : 2, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		gridLayout.marginTop = 0;
@@ -100,7 +104,10 @@ public class TextWithCancelButton extends Composite implements
 			style = style | SWT.SEARCH | SWT.ICON_CANCEL;
 		}
 		text = new Text(this, style);
-		GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		changeFont(text, fontSize);
+
+		final GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true,
+				false);
 		if (!isMac) {
 			gridData.heightHint = BUTTON_HEIGHT;
 		}
@@ -120,22 +127,22 @@ public class TextWithCancelButton extends Composite implements
 		text.addModifyListener(new ModifyListener() {
 
 			@Override
-			public void modifyText(ModifyEvent e) {
+			public void modifyText(final ModifyEvent e) {
 				if (!hasEmptyText(text)) {
-					String newText = text.getText();
+					final String newText = text.getText();
 					if (!lastText.equals(newText)) {
 						if (cancelButtonFinal != null) {
 							if (newText.length() == 0) {
 								cancelButtonFinal.setImage(null);
 							} else {
 								if (cancelButtonFinal.getImage() == null) {
-									Point buttonLocation = cancelButtonFinal
+									final Point buttonLocation = cancelButtonFinal
 											.getParent().toDisplay(
 													cancelButtonFinal
 															.getLocation());
-									Point cursorLocationOrig = cancelButtonFinal
+									final Point cursorLocationOrig = cancelButtonFinal
 											.getDisplay().getCursorLocation();
-									Point cursorLocation = new Point(
+									final Point cursorLocation = new Point(
 											cursorLocationOrig.x
 													- buttonLocation.x,
 											cursorLocationOrig.y
@@ -157,14 +164,14 @@ public class TextWithCancelButton extends Composite implements
 		text.addFocusListener(new FocusListener() {
 
 			@Override
-			public void focusLost(FocusEvent e) {
+			public void focusLost(final FocusEvent e) {
 				if (text.getText().isEmpty()) {
 					setEmptyText(text);
 				}
 			}
 
 			@Override
-			public void focusGained(FocusEvent e) {
+			public void focusGained(final FocusEvent e) {
 				if (hasEmptyText(text)) {
 					clearText(text);
 				}
@@ -173,23 +180,32 @@ public class TextWithCancelButton extends Composite implements
 
 		text.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void mouseUp(final MouseEvent e) {
 				if (!text.isFocusControl()) {
 					text.setFocus();
 				}
 			}
 
 			@Override
-			public void mouseDoubleClick(MouseEvent e) {
+			public void mouseDoubleClick(final MouseEvent e) {
 				mouseUp(e);
 			}
 		});
 
-		IFocusService focusService = (IFocusService) PlatformUI.getWorkbench()
-				.getService(IFocusService.class);
+		final IFocusService focusService = (IFocusService) PlatformUI
+				.getWorkbench().getService(IFocusService.class);
 		focusService
 				.addFocusTracker(text,
-						"org.javaadam.quickmatcher.common.widgets.TextWithCancelButton.textfield"); //$NON-NLS-1$
+						"org.javaadam.quickmatcher.common.widgets.TextWithCancelButton.textfield");
+	}
+
+	private void changeFont(final Text text, final int fontSize) {
+		final FontData[] fontData = text.getFont().getFontData();
+		if (fontData.length > 0) {
+			fontData[0].setHeight(fontSize);
+			text.setFont(new Font(text.getDisplay(), fontData));
+			text.addDisposeListener(this);
+		}
 	}
 
 	private void initImages() {
@@ -200,7 +216,7 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	@Override
-	public void mouseDown(MouseEvent e) {
+	public void mouseDown(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.addMouseMoveListener(this);
 			isMouseMoveListenerRegistered = true;
@@ -208,11 +224,11 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	@Override
-	public void mouseUp(MouseEvent e) {
+	public void mouseUp(final MouseEvent e) {
 		if (isMouseMoveListenerRegistered) {
 			cancelButton.removeMouseMoveListener(this);
 			isMouseMoveListenerRegistered = false;
-			boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
+			final boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
 			if (mouseInButton) {
 				clearText(text);
 				text.setFocus();
@@ -221,74 +237,82 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	@Override
-	public void mouseDoubleClick(MouseEvent e) {
+	public void mouseDoubleClick(final MouseEvent e) {
 		// nothing to do
 	}
 
 	@Override
-	public void mouseEnter(MouseEvent e) {
+	public void mouseEnter(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.setImage(activeImage);
 		}
 	}
 
 	@Override
-	public void mouseExit(MouseEvent e) {
+	public void mouseExit(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.setImage(inactiveImage);
 		}
 	}
 
 	@Override
-	public void mouseHover(MouseEvent e) {
+	public void mouseHover(final MouseEvent e) {
 		// nothing to do
 	}
 
 	@Override
-	public void mouseMove(MouseEvent e) {
-		boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
+	public void mouseMove(final MouseEvent e) {
+		final boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
 		if (!hasEmptyText(text) && mouseInButton != isMouseInButton) {
 			isMouseInButton = mouseInButton;
 			cancelButton.setImage(mouseInButton ? activeImage : inactiveImage);
 		}
 	}
 
-	private boolean isMouseInButton(Point mousePoint) {
-		Point buttonSize = cancelButton.getSize();
+	private boolean isMouseInButton(final Point mousePoint) {
+		final Point buttonSize = cancelButton.getSize();
 		return 0 <= mousePoint.x && mousePoint.x < buttonSize.x
 				&& 0 <= mousePoint.y && mousePoint.y < buttonSize.y;
 	}
 
-	private void setEmptyText(Text control) {
-		Display display = control.getDisplay();
+	private void setEmptyText(final Text control) {
+		final Display display = control.getDisplay();
 		control.setText(textEmpty);
 		control.setForeground(display.getSystemColor(SWT.COLOR_GRAY));
 	}
 
-	private boolean hasEmptyText(Text text) {
+	private boolean hasEmptyText(final Text text) {
 		return text.getText().equals(textEmpty);
 	}
 
-	private void clearText(Text source) {
-		source.setText(""); //$NON-NLS-1$
+	private void clearText(final Text source) {
+		source.setText("");
 		source.setForeground(null);
 	}
 
-	public void addModifyListener(ModifyListener listener) {
+	public void addModifyListener(final ModifyListener listener) {
 		checkWidget();
 		if (listener == null) {
 			SWT.error(SWT.ERROR_NULL_ARGUMENT);
 		}
-		TypedListener typedListener = new TypedListener(listener);
+		final TypedListener typedListener = new TypedListener(listener);
 		addListener(SWT.Modify, typedListener);
 	}
 
-	public void removeModifyListener(ModifyListener listener) {
+	public void removeModifyListener(final ModifyListener listener) {
 		removeListener(SWT.Modify, listener);
 	}
 
 	public void clearText() {
 		setEmptyText(text);
+	}
+
+	@Override
+	public void widgetDisposed(final DisposeEvent e) {
+		if (e.getSource() == text) {
+			final Text source = (Text) e.getSource();
+			source.getFont().dispose();
+		}
 	}
 
 }

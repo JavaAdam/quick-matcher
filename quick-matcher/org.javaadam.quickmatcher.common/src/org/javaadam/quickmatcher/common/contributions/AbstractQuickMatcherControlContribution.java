@@ -34,6 +34,13 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		return isMac ? SWT.DEFAULT : 14;
 	}
 
+	private int getFontHeight() {
+		if (getHeight() != SWT.DEFAULT) {
+			return getHeight() - 6;
+		}
+		return SWT.DEFAULT;
+	}
+
 	protected String getInitialMatcherText() {
 		return null;
 	}
@@ -52,7 +59,7 @@ public abstract class AbstractQuickMatcherControlContribution extends
 				matcherTextChanged(newFilterText);
 			}
 		};
-		matcherControl = new TextWithCancelButton(composite);
+		matcherControl = new TextWithCancelButton(composite, getFontHeight());
 		matcherControl.setLayoutData(GridDataFactory.fillDefaults()
 				.hint(getWidth(), getHeight()).create());
 		initText();
