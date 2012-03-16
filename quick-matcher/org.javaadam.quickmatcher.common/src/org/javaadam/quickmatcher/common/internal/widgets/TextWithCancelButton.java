@@ -119,7 +119,6 @@ public class TextWithCancelButton extends Composite implements
 			cancelButton
 					.setLayoutData(new GridData(BUTTON_WIDTH, BUTTON_WIDTH));
 			cancelButton.setBackground(text.getBackground());
-			cancelButton.setToolTipText(tooltipClear);
 			cancelButton.addMouseListener(this);
 			cancelButton.addMouseTrackListener(this);
 		}
@@ -134,6 +133,7 @@ public class TextWithCancelButton extends Composite implements
 						if (cancelButtonFinal != null) {
 							if (newText.length() == 0) {
 								cancelButtonFinal.setImage(null);
+								cancelButtonFinal.setToolTipText(null);
 							} else {
 								if (cancelButtonFinal.getImage() == null) {
 									final Point buttonLocation = cancelButtonFinal
@@ -150,6 +150,8 @@ public class TextWithCancelButton extends Composite implements
 									cancelButtonFinal
 											.setImage(isMouseInButton(cursorLocation) ? activeImage
 													: inactiveImage);
+									cancelButtonFinal
+											.setToolTipText(tooltipClear);
 								}
 							}
 						}
