@@ -29,7 +29,7 @@ import org.eclipse.ui.swt.IFocusService;
 
 public class TextWithCancelButton extends Composite implements
 		ITextContentWidget, MouseListener, MouseTrackListener,
-		MouseMoveListener, DisposeListener {
+		MouseMoveListener, DisposeListener, ModifyListener {
 
 	private static final String textEmpty = Messages.TextWithCancelButton_empty_text;
 
@@ -122,46 +122,7 @@ public class TextWithCancelButton extends Composite implements
 			cancelButton.addMouseListener(this);
 			cancelButton.addMouseTrackListener(this);
 		}
-		final Label cancelButtonFinal = cancelButton;
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				if (!hasEmptyText(text)) {
-					final String newText = text.getText();
-					if (!lastText.equals(newText)) {
-						if (cancelButtonFinal != null) {
-							if (newText.length() == 0) {
-								cancelButtonFinal.setImage(null);
-								cancelButtonFinal.setToolTipText(null);
-							} else {
-								if (cancelButtonFinal.getImage() == null) {
-									final Point buttonLocation = cancelButtonFinal
-											.getParent().toDisplay(
-													cancelButtonFinal
-															.getLocation());
-									final Point cursorLocationOrig = cancelButtonFinal
-											.getDisplay().getCursorLocation();
-									final Point cursorLocation = new Point(
-											cursorLocationOrig.x
-													- buttonLocation.x,
-											cursorLocationOrig.y
-													- buttonLocation.y);
-									cancelButtonFinal
-											.setImage(isMouseInButton(cursorLocation) ? activeImage
-													: inactiveImage);
-									cancelButtonFinal
-											.setToolTipText(tooltipClear);
-								}
-							}
-						}
-						TextWithCancelButton.this.notifyListeners(SWT.Modify,
-								null);
-						lastText = newText;
-					}
-				}
-			}
-		});
+		text.addModifyListener(this);
 
 		text.addFocusListener(new FocusListener() {
 
@@ -314,6 +275,42 @@ public class TextWithCancelButton extends Composite implements
 		if (e.getSource() == text) {
 			final Text source = (Text) e.getSource();
 			source.getFont().dispose();
+		}
+	}
+
+	@Override
+	public void modifyText(final ModifyEvent e) {
+		if (!hasEmptyText(text)) {
+			final String newText = text.getText();
+			if (!lastText.equals(newText)) {
+				if (cancelButton != null) {
+					if (newText.length() == 0) {
+						cancelButton.setImage(null);
+						cancelButton.setToolTipText(null);
+					} else {
+						if (cancelButton.getImage() == null) {
+							final Point buttonLocation = cancelButton
+									.getParent().toDisplay(
+											cancelButton.getLocation());
+
+							final Point cursorLocationOrig = cancelButton
+									.getDisplay().getCursorLocation();
+
+							final Point cursorLocation = new Point(
+									cursorLocationOrig.x - buttonLocation.x,
+									cursorLocationOrig.y - buttonLocation.y);
+
+							cancelButton
+									.setImage(isMouseInButton(cursorLocation) ? activeImage
+											: inactiveImage);
+
+							cancelButton.setToolTipText(tooltipClear);
+						}
+					}
+				}
+				TextWithCancelButton.this.notifyListeners(SWT.Modify, null);
+				lastText = newText;
+			}
 		}
 	}
 
