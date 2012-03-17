@@ -18,6 +18,9 @@ public class TextMatcherTest {
 	@Test
 	public void matchesWithNulls() {
 		final String message = "some message";
+		final String messageWithLineBreak = "\nsome \nmessage\n";
+		final String messageWithTab = "\tsome \tmessage\t";
+
 		assertTrue(matcher.matches(message, message));
 		assertTrue(matcher.matches(message, "age"));
 		assertTrue(matcher.matches(message, "some"));
@@ -29,6 +32,9 @@ public class TextMatcherTest {
 		assertTrue(matcher.matches(message, "*so*e*m*ge*"));
 		assertTrue(matcher.matches(message, ""));
 		assertTrue(matcher.matches(message, " "));
+
+		assertTrue(matcher.matches(messageWithLineBreak, "some"));
+		assertTrue(matcher.matches(messageWithTab, "some"));
 
 		assertFalse(matcher.matches(message, "!§$%&/()=?"));
 		assertFalse(matcher.matches(message, "another"));

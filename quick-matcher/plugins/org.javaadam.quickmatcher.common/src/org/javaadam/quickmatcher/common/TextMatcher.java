@@ -24,7 +24,8 @@ public class TextMatcher {
 
 			final Pattern pattern = Pattern.compile(temp + PLACEHOLDER_REGEX,
 					Pattern.CASE_INSENSITIVE);
-			final Matcher matcher = pattern.matcher(text.trim());
+			final Matcher matcher = pattern.matcher(text.replace("\n", "")
+					.trim());
 
 			return matcher.matches();
 		}
