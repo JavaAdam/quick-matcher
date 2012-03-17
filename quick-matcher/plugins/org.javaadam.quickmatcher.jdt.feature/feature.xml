@@ -2,7 +2,7 @@
 <feature
       id="org.javaadam.quickmatcher.jdt.feature"
       label="Project Matcher (JDT) Feature"
-      version="0.0.9.qualifier"
+      version="1.0.0"
       provider-name="Adam Wehner">
 
    <description url="http://code.google.com/p/quick-matcher/">

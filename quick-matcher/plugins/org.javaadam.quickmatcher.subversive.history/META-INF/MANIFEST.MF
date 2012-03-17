@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SVN Subversive History Matcher
 Bundle-SymbolicName: org.javaadam.quickmatcher.subversive.history;singleton:=true
-Bundle-Version: 0.0.9.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: org.javaadam.quickmatcher.subversive.history.internal.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
