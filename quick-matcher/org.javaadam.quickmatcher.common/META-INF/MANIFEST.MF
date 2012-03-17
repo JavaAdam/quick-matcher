@@ -8,4 +8,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.javaadam.quickmatcher.common.contributions
+Export-Package: org.javaadam.quickmatcher.common,
+ org.javaadam.quickmatcher.common.contributions

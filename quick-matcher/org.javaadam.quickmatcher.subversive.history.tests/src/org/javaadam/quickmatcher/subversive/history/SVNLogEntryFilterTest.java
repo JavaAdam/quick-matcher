@@ -13,7 +13,7 @@ public class SVNLogEntryFilterTest {
 
 	private SVNLogEntryFilter filter;
 	private final String author = "someauthor";
-	private final String message = "somemessage";
+	private final String message = "some message";
 	private final long revision = 12345;
 
 	@Before
@@ -35,10 +35,28 @@ public class SVNLogEntryFilterTest {
 		filter.setTextToAccept("or");
 		assertTrue(filter.accept(entry));
 
+		filter.setTextToAccept("HoR");
+		assertTrue(filter.accept(entry));
+
 		filter.setTextToAccept(author);
 		assertTrue(filter.accept(entry));
 
+		filter.setTextToAccept("so*or");
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept("so*");
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept("*or");
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept("*so*a*or*");
+		assertTrue(filter.accept(entry));
+
 		filter.setTextToAccept("");
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept(" ");
 		assertTrue(filter.accept(entry));
 
 		filter.setTextToAccept("another");
@@ -63,6 +81,12 @@ public class SVNLogEntryFilterTest {
 		assertTrue(filter.accept(entry));
 
 		filter.setTextToAccept(message);
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept("some ");
+		assertTrue(filter.accept(entry));
+
+		filter.setTextToAccept("me me");
 		assertTrue(filter.accept(entry));
 
 		filter.setTextToAccept("");

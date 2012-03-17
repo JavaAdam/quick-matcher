@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.4.0",
  org.eclipse.jdt.core;bundle-version="3.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Import-Package: org.javaadam.quickmatcher.common.contributions
+Import-Package: org.javaadam.quickmatcher.common,
+ org.javaadam.quickmatcher.common.contributions

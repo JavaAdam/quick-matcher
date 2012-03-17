@@ -14,5 +14,6 @@ Import-Package: org.eclipse.team.svn.core.connector,
  org.eclipse.team.svn.ui.history,
  org.eclipse.team.svn.ui.history.filter,
  org.eclipse.team.ui.history,
+ org.javaadam.quickmatcher.common,
  org.javaadam.quickmatcher.common.contributions
 Bundle-Vendor: Adam Wehner

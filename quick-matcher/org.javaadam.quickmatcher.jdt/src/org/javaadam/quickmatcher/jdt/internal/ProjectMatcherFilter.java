@@ -4,12 +4,20 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.javaadam.quickmatcher.common.TextMatcher;
 
 public class ProjectMatcherFilter extends ViewerFilter {
 
+	private final TextMatcher textMatcher;
+
+	public ProjectMatcherFilter() {
+		textMatcher = new TextMatcher();
+	}
+
 	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		String matchString = Activator.getModel().getMatchString();
+	public boolean select(final Viewer viewer, final Object parentElement,
+			final Object element) {
+		final String matchString = Activator.getModel().getMatchString();
 
 		if (matchString == null) {
 			return true;
@@ -18,13 +26,13 @@ public class ProjectMatcherFilter extends ViewerFilter {
 			if (element instanceof IProject) {
 				project = (IProject) element;
 			} else if (element instanceof IJavaProject) {
-				IJavaProject javaProject = (IJavaProject) element;
+				final IJavaProject javaProject = (IJavaProject) element;
 				project = javaProject.getProject();
 			}
 
 			if (project != null) {
-				String projectName = project.getProject().getName();
-				return projectName.contains(matchString);
+				final String projectName = project.getProject().getName();
+				return textMatcher.matches(projectName, matchString);
 			}
 		}
 

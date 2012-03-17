@@ -7,19 +7,17 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.javaadam.quickmatcher.common.contributions.AbstractQuickMatcherControlContribution;
 
-public class ToolbarControlContribution extends AbstractQuickMatcherControlContribution{
+public class ToolbarControlContribution extends
+		AbstractQuickMatcherControlContribution {
 
-	private final TextUtils textUtils;
-	
 	public ToolbarControlContribution() {
 		this(null);
 	}
 
-	public ToolbarControlContribution(String id) {
+	public ToolbarControlContribution(final String id) {
 		super(id);
-		this.textUtils = new TextUtils();
 	}
-	
+
 	@Override
 	protected int getWidth() {
 		return 100;
@@ -27,8 +25,8 @@ public class ToolbarControlContribution extends AbstractQuickMatcherControlContr
 
 	@Override
 	protected String getInitialMatcherText() {
-		ProjectMatcherModel model = Activator.getModel();
-		String matchString = model.getMatchString();
+		final ProjectMatcherModel model = Activator.getModel();
+		final String matchString = model.getMatchString();
 		if (matchString != null) {
 			return matchString;
 		} else {
@@ -37,20 +35,20 @@ public class ToolbarControlContribution extends AbstractQuickMatcherControlContr
 	}
 
 	@Override
-	protected void matcherTextChanged(String newFilterText) {
-		ProjectMatcherModel model = Activator.getModel();
-		model.setMatchString(textUtils.transformText(newFilterText));
+	protected void matcherTextChanged(final String newFilterText) {
+		final ProjectMatcherModel model = Activator.getModel();
+		model.setMatchString(newFilterText);
 		updatePackageExplorer();
 	}
 
 	private void updatePackageExplorer() {
-		IViewPart foundView = PlatformUI.getWorkbench()
+		final IViewPart foundView = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage()
 				.findView(JavaUI.ID_PACKAGES);
 
 		if (foundView instanceof IPackagesViewPart) {
-			IPackagesViewPart packageExplorerView = (IPackagesViewPart) foundView;
-			TreeViewer treeViewer = packageExplorerView.getTreeViewer();
+			final IPackagesViewPart packageExplorerView = (IPackagesViewPart) foundView;
+			final TreeViewer treeViewer = packageExplorerView.getTreeViewer();
 			treeViewer.refresh();
 		}
 

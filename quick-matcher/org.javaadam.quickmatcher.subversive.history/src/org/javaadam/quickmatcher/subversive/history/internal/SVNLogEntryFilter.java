@@ -2,6 +2,7 @@ package org.javaadam.quickmatcher.subversive.history.internal;
 
 import org.eclipse.team.svn.core.connector.SVNLogEntry;
 import org.eclipse.team.svn.ui.history.filter.ILogEntryFilter;
+import org.javaadam.quickmatcher.common.TextMatcher;
 
 /**
  * Filters svn log entries when the author, the message or the revision is
@@ -12,7 +13,13 @@ import org.eclipse.team.svn.ui.history.filter.ILogEntryFilter;
  */
 public class SVNLogEntryFilter implements ILogEntryFilter {
 
+	private final TextMatcher filterUtils;
+
 	private String textToAccept;
+
+	public SVNLogEntryFilter() {
+		filterUtils = new TextMatcher();
+	}
 
 	public void setTextToAccept(final String textToAccept) {
 		this.textToAccept = textToAccept;
@@ -35,9 +42,6 @@ public class SVNLogEntryFilter implements ILogEntryFilter {
 	}
 
 	private boolean matches(final String text) {
-		if (text != null && textToAccept != null) {
-			return text.toLowerCase().contains(textToAccept.toLowerCase());
-		}
-		return false;
+		return filterUtils.matches(text, textToAccept);
 	}
 }

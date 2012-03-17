@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Quick Matcher Common Tests
+Bundle-SymbolicName: org.javaadam.quickmatcher.common.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Adam Wehner
+Fragment-Host: org.javaadam.quickmatcher.common;bundle-version="0.0.9"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
