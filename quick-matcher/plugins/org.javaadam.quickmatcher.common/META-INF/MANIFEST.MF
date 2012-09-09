@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Quick Matcher Common
 Bundle-SymbolicName: org.javaadam.quickmatcher.common;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.1
 Bundle-Activator: org.javaadam.quickmatcher.common.internal.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime

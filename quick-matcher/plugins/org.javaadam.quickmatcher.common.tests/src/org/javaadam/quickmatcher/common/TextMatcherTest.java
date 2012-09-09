@@ -32,10 +32,16 @@ public class TextMatcherTest {
 		assertTrue(matcher.matches(message, "*so*e*m*ge*"));
 		assertTrue(matcher.matches(message, ""));
 		assertTrue(matcher.matches(message, " "));
+		assertTrue(matcher.matches(message, "some|nothing"));
+		assertTrue(matcher.matches(message, "nothing|*sag*"));
+		assertTrue(matcher.matches(message, "|some|"));
+		assertTrue(matcher.matches(message, "|*so*"));
+		assertTrue(matcher.matches(message, "some|*"));
 
 		assertTrue(matcher.matches(messageWithLineBreak, "some"));
 		assertTrue(matcher.matches(messageWithTab, "some"));
 
+		assertFalse(matcher.matches(message, "really|nothing"));
 		assertFalse(matcher.matches(message, "!§$%&/()=?"));
 		assertFalse(matcher.matches(message, "another"));
 		assertFalse(matcher.matches(message, null));
