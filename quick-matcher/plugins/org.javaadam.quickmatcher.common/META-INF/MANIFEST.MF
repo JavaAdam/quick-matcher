@@ -2,11 +2,25 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Quick Matcher Common
 Bundle-SymbolicName: org.javaadam.quickmatcher.common;singleton:=true
-Bundle-Version: 1.1
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.javaadam.quickmatcher.common.internal.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.javaadam.quickmatcher.common,
  org.javaadam.quickmatcher.common.contributions
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.runtime,
+ org.eclipse.jface.layout,
+ org.eclipse.osgi.util,
+ org.eclipse.swt,
+ org.eclipse.swt.events,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.internal,
+ org.eclipse.swt.layout,
+ org.eclipse.swt.widgets,
+ org.eclipse.ui,
+ org.eclipse.ui.internal.handlers,
+ org.eclipse.ui.menus,
+ org.eclipse.ui.plugin,
+ org.eclipse.ui.services,
+ org.eclipse.ui.swt,
+ org.osgi.framework

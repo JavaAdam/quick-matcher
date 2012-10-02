@@ -2,7 +2,7 @@
 <feature
       id="org.javaadam.quickmatcher.subversive.feature"
       label="Subversive History Matcher Feature"
-      version="1.1"
+      version="1.1.0.qualifier"
       provider-name="Adam Wehner">
 
    <description url="http://code.google.com/p/quick-matcher/">

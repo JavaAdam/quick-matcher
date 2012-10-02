@@ -58,13 +58,11 @@ public class TextWithCancelButton extends Composite implements
 		createControls(fontSize);
 	}
 
-	@Override
 	public String getText() {
 		checkWidget();
 		return text.getText();
 	}
 
-	@Override
 	public void setText(final String textContent) {
 		checkWidget();
 		if (textContent != null && textContent.length() != 0
@@ -126,14 +124,12 @@ public class TextWithCancelButton extends Composite implements
 
 		text.addFocusListener(new FocusListener() {
 
-			@Override
 			public void focusLost(final FocusEvent e) {
 				if (text.getText().isEmpty()) {
 					setEmptyText(text);
 				}
 			}
 
-			@Override
 			public void focusGained(final FocusEvent e) {
 				if (hasEmptyText(text)) {
 					clearText(text);
@@ -178,7 +174,6 @@ public class TextWithCancelButton extends Composite implements
 				.getImage(ISharedImages.IMG_ETOOL_CLEAR_DISABLED);
 	}
 
-	@Override
 	public void mouseDown(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.addMouseMoveListener(this);
@@ -186,7 +181,6 @@ public class TextWithCancelButton extends Composite implements
 		}
 	}
 
-	@Override
 	public void mouseUp(final MouseEvent e) {
 		if (isMouseMoveListenerRegistered) {
 			cancelButton.removeMouseMoveListener(this);
@@ -199,31 +193,26 @@ public class TextWithCancelButton extends Composite implements
 		}
 	}
 
-	@Override
 	public void mouseDoubleClick(final MouseEvent e) {
 		// nothing to do
 	}
 
-	@Override
 	public void mouseEnter(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.setImage(activeImage);
 		}
 	}
 
-	@Override
 	public void mouseExit(final MouseEvent e) {
 		if (!hasEmptyText(text) && text.getText().length() != 0) {
 			cancelButton.setImage(inactiveImage);
 		}
 	}
 
-	@Override
 	public void mouseHover(final MouseEvent e) {
 		// nothing to do
 	}
 
-	@Override
 	public void mouseMove(final MouseEvent e) {
 		final boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
 		if (!hasEmptyText(text) && mouseInButton != isMouseInButton) {
@@ -270,7 +259,6 @@ public class TextWithCancelButton extends Composite implements
 		setEmptyText(text);
 	}
 
-	@Override
 	public void widgetDisposed(final DisposeEvent e) {
 		if (e.getSource() == text) {
 			final Text source = (Text) e.getSource();
@@ -278,7 +266,6 @@ public class TextWithCancelButton extends Composite implements
 		}
 	}
 
-	@Override
 	public void modifyText(final ModifyEvent e) {
 		if (!hasEmptyText(text)) {
 			final String newText = text.getText();

@@ -2,18 +2,24 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SVN Subversive History Matcher
 Bundle-SymbolicName: org.javaadam.quickmatcher.subversive.history;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.javaadam.quickmatcher.subversive.history.internal.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.team.svn.core.connector,
+Import-Package: org.eclipse.core.runtime,
+ org.eclipse.jface.util,
+ org.eclipse.swt.events,
+ org.eclipse.swt.widgets,
+ org.eclipse.team.svn.core.connector,
  org.eclipse.team.svn.core.resource.events,
  org.eclipse.team.svn.core.svnstorage.events,
  org.eclipse.team.svn.ui.history,
  org.eclipse.team.svn.ui.history.filter,
  org.eclipse.team.ui.history,
+ org.eclipse.ui,
+ org.eclipse.ui.part,
+ org.eclipse.ui.plugin,
  org.javaadam.quickmatcher.common,
- org.javaadam.quickmatcher.common.contributions
+ org.javaadam.quickmatcher.common.contributions,
+ org.osgi.framework
 Bundle-Vendor: Adam Wehner

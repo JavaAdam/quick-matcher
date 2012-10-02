@@ -52,7 +52,6 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		final Composite composite = createComposite(parent);
 		final ModifyListener modifyListener = new ModifyListener() {
 
-			@Override
 			public void modifyText(final ModifyEvent e) {
 				final String newFilterText = ((TextWithCancelButton) e.widget)
 						.getText();
