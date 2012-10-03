@@ -10,6 +10,8 @@ import org.eclipse.team.ui.history.IHistoryView;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.javaadam.quickmatcher.common.contributions.AbstractQuickMatcherControlContribution;
+import org.javaadam.quickmatcher.common.widgets.CancelButtonHoverHandler;
+import org.javaadam.quickmatcher.common.widgets.ICancelButtonHandler;
 import org.javaadam.quickmatcher.subversive.history.internal.SVNLogEntryFilter;
 
 public class ToolbarControlContribution extends
@@ -29,6 +31,11 @@ public class ToolbarControlContribution extends
 	@Override
 	protected int getWidth() {
 		return 100;
+	}
+
+	@Override
+	protected ICancelButtonHandler getCancelButtonHandler() {
+		return new CancelButtonHoverHandler();
 	}
 
 	@Override

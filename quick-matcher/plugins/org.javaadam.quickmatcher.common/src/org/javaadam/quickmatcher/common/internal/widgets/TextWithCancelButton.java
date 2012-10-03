@@ -10,8 +10,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
@@ -26,10 +24,10 @@ import org.eclipse.swt.widgets.TypedListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.swt.IFocusService;
+import org.javaadam.quickmatcher.common.widgets.ICancelButtonHandler;
 
 public class TextWithCancelButton extends Composite implements
-		ITextContentWidget, MouseListener, MouseTrackListener,
-		MouseMoveListener, DisposeListener, ModifyListener {
+		ITextContentWidget, MouseListener, DisposeListener, ModifyListener {
 
 	private static final String textEmpty = Messages.TextWithCancelButton_empty_text;
 
@@ -45,17 +43,17 @@ public class TextWithCancelButton extends Composite implements
 
 	private Label cancelButton = null;
 
-	private boolean isMouseMoveListenerRegistered = false;
-	private boolean isMouseInButton = false;
+	private boolean clearWasClicked = false;
 
 	private String lastText = "";
 
 	private Image activeImage = null;
 	private Image inactiveImage = null;
 
-	public TextWithCancelButton(final Composite parent, final int fontSize) {
+	public TextWithCancelButton(final Composite parent, final int fontSize,
+			final ICancelButtonHandler cancelButtonHandler) {
 		super(parent, isMac ? SWT.NONE : SWT.BORDER);
-		createControls(fontSize);
+		createControls(fontSize, cancelButtonHandler);
 	}
 
 	public String getText() {
@@ -86,7 +84,8 @@ public class TextWithCancelButton extends Composite implements
 
 	}
 
-	private void createControls(final int fontSize) {
+	private void createControls(final int fontSize,
+			final ICancelButtonHandler cancelButtonHandler) {
 		initImages();
 		final GridLayout gridLayout = new GridLayout(isMac ? 1 : 2, false);
 		gridLayout.marginWidth = 0;
@@ -118,7 +117,7 @@ public class TextWithCancelButton extends Composite implements
 					.setLayoutData(new GridData(BUTTON_WIDTH, BUTTON_WIDTH));
 			cancelButton.setBackground(text.getBackground());
 			cancelButton.addMouseListener(this);
-			cancelButton.addMouseTrackListener(this);
+			cancelButtonHandler.init(this, cancelButton);
 		}
 		text.addModifyListener(this);
 
@@ -131,7 +130,7 @@ public class TextWithCancelButton extends Composite implements
 			}
 
 			public void focusGained(final FocusEvent e) {
-				if (hasEmptyText(text)) {
+				if (isEmptyText(text)) {
 					clearText(text);
 				}
 			}
@@ -175,21 +174,19 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	public void mouseDown(final MouseEvent e) {
-		if (!hasEmptyText(text) && text.getText().length() != 0) {
-			cancelButton.addMouseMoveListener(this);
-			isMouseMoveListenerRegistered = true;
+		if (!hasEmptyText()) {
+			final boolean mouseInButton = isPointerInButton(new Point(e.x, e.y));
+			if (mouseInButton) {
+				clearWasClicked = true;
+			}
 		}
 	}
 
 	public void mouseUp(final MouseEvent e) {
-		if (isMouseMoveListenerRegistered) {
-			cancelButton.removeMouseMoveListener(this);
-			isMouseMoveListenerRegistered = false;
-			final boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
-			if (mouseInButton) {
-				clearText(text);
-				text.setFocus();
-			}
+		if (clearWasClicked) {
+			clearText(text);
+			text.setFocus();
+			clearWasClicked = false;
 		}
 	}
 
@@ -197,34 +194,26 @@ public class TextWithCancelButton extends Composite implements
 		// nothing to do
 	}
 
-	public void mouseEnter(final MouseEvent e) {
-		if (!hasEmptyText(text) && text.getText().length() != 0) {
+	private boolean hasEmptyText() {
+		return (isEmptyText(text) || text.getText().length() == 0);
+	}
+
+	public void highlightClearImage() {
+		if (cancelButton.getImage() != null) {
 			cancelButton.setImage(activeImage);
 		}
 	}
 
-	public void mouseExit(final MouseEvent e) {
-		if (!hasEmptyText(text) && text.getText().length() != 0) {
+	public void resetClearImage() {
+		if (cancelButton.getImage() != null) {
 			cancelButton.setImage(inactiveImage);
 		}
 	}
 
-	public void mouseHover(final MouseEvent e) {
-		// nothing to do
-	}
-
-	public void mouseMove(final MouseEvent e) {
-		final boolean mouseInButton = isMouseInButton(new Point(e.x, e.y));
-		if (!hasEmptyText(text) && mouseInButton != isMouseInButton) {
-			isMouseInButton = mouseInButton;
-			cancelButton.setImage(mouseInButton ? activeImage : inactiveImage);
-		}
-	}
-
-	private boolean isMouseInButton(final Point mousePoint) {
+	private boolean isPointerInButton(final Point pointer) {
 		final Point buttonSize = cancelButton.getSize();
-		return 0 <= mousePoint.x && mousePoint.x < buttonSize.x
-				&& 0 <= mousePoint.y && mousePoint.y < buttonSize.y;
+		return 0 <= pointer.x && pointer.x < buttonSize.x && 0 <= pointer.y
+				&& pointer.y < buttonSize.y;
 	}
 
 	private void setEmptyText(final Text control) {
@@ -233,7 +222,7 @@ public class TextWithCancelButton extends Composite implements
 		control.setForeground(display.getSystemColor(SWT.COLOR_GRAY));
 	}
 
-	private boolean hasEmptyText(final Text text) {
+	private boolean isEmptyText(final Text text) {
 		return text.getText().equals(textEmpty);
 	}
 
@@ -267,7 +256,7 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	public void modifyText(final ModifyEvent e) {
-		if (!hasEmptyText(text)) {
+		if (!isEmptyText(text)) {
 			final String newText = text.getText();
 			if (!lastText.equals(newText)) {
 				if (cancelButton != null) {
@@ -288,7 +277,7 @@ public class TextWithCancelButton extends Composite implements
 									cursorLocationOrig.y - buttonLocation.y);
 
 							cancelButton
-									.setImage(isMouseInButton(cursorLocation) ? activeImage
+									.setImage(isPointerInButton(cursorLocation) ? activeImage
 											: inactiveImage);
 
 							cancelButton.setToolTipText(tooltipClear);

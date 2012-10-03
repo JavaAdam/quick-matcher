@@ -6,6 +6,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.javaadam.quickmatcher.common.contributions.AbstractQuickMatcherControlContribution;
+import org.javaadam.quickmatcher.common.widgets.CancelButtonHoverHandler;
+import org.javaadam.quickmatcher.common.widgets.ICancelButtonHandler;
 
 public class ToolbarControlContribution extends
 		AbstractQuickMatcherControlContribution {
@@ -21,6 +23,11 @@ public class ToolbarControlContribution extends
 	@Override
 	protected int getWidth() {
 		return 100;
+	}
+
+	@Override
+	protected ICancelButtonHandler getCancelButtonHandler() {
+		return new CancelButtonHoverHandler();
 	}
 
 	@Override
@@ -53,4 +60,5 @@ public class ToolbarControlContribution extends
 		}
 
 	}
+
 }

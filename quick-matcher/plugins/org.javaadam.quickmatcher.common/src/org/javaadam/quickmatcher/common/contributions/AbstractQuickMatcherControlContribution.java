@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 import org.javaadam.quickmatcher.common.internal.widgets.TextWithCancelButton;
+import org.javaadam.quickmatcher.common.widgets.ICancelButtonHandler;
 
 public abstract class AbstractQuickMatcherControlContribution extends
 		WorkbenchWindowControlContribution {
@@ -45,6 +46,8 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		return null;
 	}
 
+	protected abstract ICancelButtonHandler getCancelButtonHandler();
+
 	protected abstract void matcherTextChanged(String newText);
 
 	@Override
@@ -52,13 +55,15 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		final Composite composite = createComposite(parent);
 		final ModifyListener modifyListener = new ModifyListener() {
 
+			@Override
 			public void modifyText(final ModifyEvent e) {
 				final String newFilterText = ((TextWithCancelButton) e.widget)
 						.getText();
 				matcherTextChanged(newFilterText);
 			}
 		};
-		matcherControl = new TextWithCancelButton(composite, getFontHeight());
+		matcherControl = new TextWithCancelButton(composite, getFontHeight(),
+				getCancelButtonHandler());
 		matcherControl.setLayoutData(GridDataFactory.fillDefaults()
 				.hint(getWidth(), getHeight()).create());
 		initText();

@@ -6,7 +6,8 @@ Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.javaadam.quickmatcher.common.internal.Activator
 Bundle-ActivationPolicy: lazy
 Export-Package: org.javaadam.quickmatcher.common,
- org.javaadam.quickmatcher.common.contributions
+ org.javaadam.quickmatcher.common.contributions,
+ org.javaadam.quickmatcher.common.widgets
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.runtime,
  org.eclipse.jface.layout,

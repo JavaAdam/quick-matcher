@@ -21,5 +21,6 @@ Import-Package: org.eclipse.core.runtime,
  org.eclipse.ui.plugin,
  org.javaadam.quickmatcher.common,
  org.javaadam.quickmatcher.common.contributions,
+ org.javaadam.quickmatcher.common.widgets,
  org.osgi.framework
 Bundle-Vendor: Adam Wehner
