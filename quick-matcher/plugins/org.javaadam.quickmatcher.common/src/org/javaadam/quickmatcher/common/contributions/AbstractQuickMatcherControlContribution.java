@@ -35,7 +35,7 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		return isMac ? SWT.DEFAULT : 14;
 	}
 
-	private int getFontHeight() {
+	protected int getFontHeight() {
 		if (getHeight() != SWT.DEFAULT) {
 			return getHeight() - 6;
 		}
