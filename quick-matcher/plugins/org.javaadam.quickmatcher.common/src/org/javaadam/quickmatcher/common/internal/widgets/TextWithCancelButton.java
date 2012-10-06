@@ -241,7 +241,7 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	public void removeModifyListener(final ModifyListener listener) {
-		removeListener(SWT.Modify, listener);
+		removeListener(SWT.Modify, new TypedListener(listener));
 	}
 
 	public void clearText() {

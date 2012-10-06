@@ -10,23 +10,19 @@ public class CancelButtonStaticHandler implements ICancelButtonHandler,
 
 	private TextWithCancelButton text;
 
-	@Override
 	public void init(final TextWithCancelButton text, final Control cancelButton) {
 		this.text = text;
 		cancelButton.addMouseListener(this);
 	}
 
-	@Override
 	public void mouseDoubleClick(final MouseEvent e) {
 		// nothing to do
 	}
 
-	@Override
 	public void mouseDown(final MouseEvent e) {
 		text.highlightClearImage();
 	}
 
-	@Override
 	public void mouseUp(final MouseEvent e) {
 		text.resetClearImage();
 	}

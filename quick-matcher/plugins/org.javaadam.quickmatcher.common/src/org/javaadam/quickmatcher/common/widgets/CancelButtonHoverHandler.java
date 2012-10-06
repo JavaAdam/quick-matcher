@@ -10,23 +10,19 @@ public class CancelButtonHoverHandler implements ICancelButtonHandler,
 
 	private TextWithCancelButton text;
 
-	@Override
 	public void init(final TextWithCancelButton text, final Control cancelButton) {
 		this.text = text;
 		cancelButton.addMouseTrackListener(this);
 	}
 
-	@Override
 	public void mouseHover(final MouseEvent e) {
 		// nothing to do
 	}
 
-	@Override
 	public void mouseEnter(final MouseEvent e) {
 		text.highlightClearImage();
 	}
 
-	@Override
 	public void mouseExit(final MouseEvent e) {
 		text.resetClearImage();
 	}
