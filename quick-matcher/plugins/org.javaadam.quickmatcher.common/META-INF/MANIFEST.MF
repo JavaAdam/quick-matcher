@@ -24,3 +24,4 @@ Import-Package: org.eclipse.core.runtime,
  org.eclipse.ui.services,
  org.eclipse.ui.swt,
  org.osgi.framework
+Bundle-Vendor: Adam Wehner
