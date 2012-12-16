@@ -3,10 +3,10 @@
    <description name="Quick Matcher" url="http://quick-matcher.googlecode.com/git/quick-matcher/updatesite">
       [Any description from project site]
    </description>
-   <feature url="features/org.javaadam.quickmatcher.jdt.feature_1.1.0.jar" id="org.javaadam.quickmatcher.jdt.feature" version="1.1">
+   <feature url="features/org.javaadam.quickmatcher.jdt.feature_1.1.1.jar" id="org.javaadam.quickmatcher.jdt.feature" version="1.1.1">
       <category name="Project Matcher"/>
    </feature>
-   <feature url="features/org.javaadam.quickmatcher.subversive.feature_1.1.0.jar" id="org.javaadam.quickmatcher.subversive.feature" version="1.1">
+   <feature url="features/org.javaadam.quickmatcher.subversive.feature_1.1.1.jar" id="org.javaadam.quickmatcher.subversive.feature" version="1.1.1">
       <category name="Subversive History Matcher"/>
    </feature>
    <category-def name="Project Matcher" label="Project Matcher">
