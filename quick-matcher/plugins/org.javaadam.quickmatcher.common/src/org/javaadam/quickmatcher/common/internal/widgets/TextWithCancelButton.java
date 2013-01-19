@@ -29,30 +29,25 @@ import org.javaadam.quickmatcher.common.widgets.ICancelButtonHandler;
 public class TextWithCancelButton extends Composite implements
 		ITextContentWidget, MouseListener, DisposeListener, ModifyListener {
 
-	private static final String textEmpty = Messages.TextWithCancelButton_empty_text;
-
-	private static final String tooltipClear = Messages.TextWithCancelButton_tooltip_clear;
-
 	private static final int BUTTON_HEIGHT = 16;
 	private static final int BUTTON_WIDTH = BUTTON_HEIGHT;
-
-	private static final boolean isMac = System.getProperty("os.name")
+	private static final String TEXT_EMPTY_LABEL_DEFAULT = Messages.TextWithCancelButton_empty_text;
+	private static final String TEXT_TOOLTIP_CLEAR_DEFAULT = Messages.TextWithCancelButton_tooltip_clear;
+	private static final boolean IS_MAC = System.getProperty("os.name")
 			.equalsIgnoreCase("Mac OS X");
 
 	private Text text = null;
-
-	private Label cancelButton = null;
-
-	private boolean clearWasClicked = false;
-
+	private String emptyText = TEXT_EMPTY_LABEL_DEFAULT;
+	private String tooltipClear = TEXT_TOOLTIP_CLEAR_DEFAULT;
 	private String lastText = "";
-
+	private Label cancelButton = null;
+	private boolean clearWasClicked = false;
 	private Image activeImage = null;
 	private Image inactiveImage = null;
 
 	public TextWithCancelButton(final Composite parent, final int fontSize,
 			final ICancelButtonHandler cancelButtonHandler) {
-		super(parent, isMac ? SWT.NONE : SWT.BORDER);
+		super(parent, IS_MAC ? SWT.NONE : SWT.BORDER);
 		createControls(fontSize, cancelButtonHandler);
 	}
 
@@ -64,7 +59,7 @@ public class TextWithCancelButton extends Composite implements
 	public void setText(final String textContent) {
 		checkWidget();
 		if (textContent != null && textContent.length() != 0
-				&& !textContent.equals(textEmpty)) {
+				&& !textContent.equals(emptyText)) {
 			text.setForeground(null);
 		}
 		text.setText(textContent);
@@ -77,7 +72,7 @@ public class TextWithCancelButton extends Composite implements
 			if (gridData.widthHint != SWT.DEFAULT) {
 				final int width = gridData.widthHint;
 				final int borderWidth = 2;
-				gridData.widthHint = isMac ? width : width - borderWidth;
+				gridData.widthHint = IS_MAC ? width : width - borderWidth;
 			}
 		}
 		super.setLayoutData(layoutData);
@@ -87,7 +82,7 @@ public class TextWithCancelButton extends Composite implements
 	private void createControls(final int fontSize,
 			final ICancelButtonHandler cancelButtonHandler) {
 		initImages();
-		final GridLayout gridLayout = new GridLayout(isMac ? 1 : 2, false);
+		final GridLayout gridLayout = new GridLayout(IS_MAC ? 1 : 2, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
 		gridLayout.marginTop = 0;
@@ -97,7 +92,7 @@ public class TextWithCancelButton extends Composite implements
 		setLayout(gridLayout);
 
 		int style = SWT.SINGLE;
-		if (isMac) {
+		if (IS_MAC) {
 			style = style | SWT.SEARCH | SWT.ICON_CANCEL;
 		}
 		text = new Text(this, style);
@@ -105,13 +100,13 @@ public class TextWithCancelButton extends Composite implements
 
 		final GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true,
 				false);
-		if (!isMac) {
+		if (!IS_MAC) {
 			gridData.heightHint = BUTTON_HEIGHT;
 		}
 		text.setLayoutData(gridData);
-		setEmptyText(text);
+		setEmptyTextControl(text);
 
-		if (!isMac) {
+		if (!IS_MAC) {
 			cancelButton = new Label(this, SWT.PUSH);
 			cancelButton
 					.setLayoutData(new GridData(BUTTON_WIDTH, BUTTON_WIDTH));
@@ -125,7 +120,7 @@ public class TextWithCancelButton extends Composite implements
 
 			public void focusLost(final FocusEvent e) {
 				if (text.getText().isEmpty()) {
-					setEmptyText(text);
+					setEmptyTextControl(text);
 				}
 			}
 
@@ -216,14 +211,14 @@ public class TextWithCancelButton extends Composite implements
 				&& pointer.y < buttonSize.y;
 	}
 
-	private void setEmptyText(final Text control) {
+	private void setEmptyTextControl(final Text control) {
 		final Display display = control.getDisplay();
-		control.setText(textEmpty);
+		control.setText(emptyText);
 		control.setForeground(display.getSystemColor(SWT.COLOR_GRAY));
 	}
 
 	private boolean isEmptyText(final Text text) {
-		return text.getText().equals(textEmpty);
+		return text.getText().equals(emptyText);
 	}
 
 	private void clearText(final Text source) {
@@ -245,7 +240,7 @@ public class TextWithCancelButton extends Composite implements
 	}
 
 	public void clearText() {
-		setEmptyText(text);
+		setEmptyTextControl(text);
 	}
 
 	public void widgetDisposed(final DisposeEvent e) {
@@ -287,6 +282,22 @@ public class TextWithCancelButton extends Composite implements
 				TextWithCancelButton.this.notifyListeners(SWT.Modify, null);
 				lastText = newText;
 			}
+		}
+	}
+
+	public void setEmptyLabelText(final String text) {
+		if (text == null) {
+			this.emptyText = TEXT_EMPTY_LABEL_DEFAULT;
+		} else {
+			this.emptyText = text;
+		}
+	}
+
+	public void setClearTooltip(final String text) {
+		if (text == null) {
+			this.tooltipClear = TEXT_TOOLTIP_CLEAR_DEFAULT;
+		} else {
+			this.tooltipClear = text;
 		}
 	}
 

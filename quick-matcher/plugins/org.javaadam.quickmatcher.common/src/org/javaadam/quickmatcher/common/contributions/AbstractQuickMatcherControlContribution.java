@@ -46,6 +46,14 @@ public abstract class AbstractQuickMatcherControlContribution extends
 		return null;
 	}
 
+	protected String getEmptyLabelText() {
+		return null;
+	}
+
+	protected String getTooltipClear() {
+		return null;
+	}
+
 	protected abstract ICancelButtonHandler getCancelButtonHandler();
 
 	protected abstract void matcherTextChanged(String newText);
@@ -65,6 +73,8 @@ public abstract class AbstractQuickMatcherControlContribution extends
 				getCancelButtonHandler());
 		matcherControl.setLayoutData(GridDataFactory.fillDefaults()
 				.hint(getWidth(), getHeight()).create());
+		matcherControl.setEmptyLabelText(getEmptyLabelText());
+		matcherControl.setClearTooltip(getTooltipClear());
 		initText();
 		matcherControl.addModifyListener(modifyListener);
 		return composite;

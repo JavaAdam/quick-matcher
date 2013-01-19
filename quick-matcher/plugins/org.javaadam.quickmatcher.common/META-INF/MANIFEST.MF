@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Quick Matcher Common
 Bundle-SymbolicName: org.javaadam.quickmatcher.common;singleton:=true
-Bundle-Version: 1.1.1
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: org.javaadam.quickmatcher.common.internal.Activator
 Bundle-ActivationPolicy: lazy
 Export-Package: org.javaadam.quickmatcher.common,
